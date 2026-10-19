@@ -54,3 +54,8 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# Local package cache and incremental compiler state.
+/.pnpm-store/
+*.tsbuildinfo
+!.env.example
