@@ -31,3 +31,22 @@ node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1
 ```
 
 D1 migrations are generated from `db/schema.ts`. Hosted publication applies migrations. Workspace updates use optimistic revision checks to reject stale edits. History is stored alongside records and is not an independently tamper-proof audit archive. Release records cannot be edited through the UI. A future multiuser version needs matter-level authorization, an immutable audit trail, recipient access, automatic reminder scheduling, delivery monitoring, backup and restore, and deployment review before storing real personnel information.
+
+## Public demonstration on GitHub Pages
+
+[**Try the demo**](https://nealdongre-code.github.io/Litigation-Hold-Manager/)
+
+The public demo requires no account. It uses fictional sample records and stores each visitor's changes in that browser's local storage. It does not connect to the private Worker, D1 database, or Resend. “Simulate email” records a demonstration event without sending anything. CSV and ICS downloads work locally. Use **Reset demo** to restore sample records, or **Start an empty workspace** to explore from scratch. Do not enter real personnel information. Browser storage must be enabled; clearing site data removes local changes. Tabs in the same browser share storage; use one tab at a time.
+
+To enable hosting, make this repository public, then go to **Settings → Pages → Build and deployment → Source → GitHub Actions**. Push to `main` or run **Actions → Deploy public demo to GitHub Pages → Run workflow**. After the deployment succeeds, the link above will be live. No application secrets or Cloudflare account are needed for the demo. The workflow deploys only `dist/demo`; the private application remains a separate deployment.
+
+Local commands (Node >=22.13, pnpm 11.25.0):
+
+```sh
+pnpm install --frozen-lockfile
+pnpm demo:test
+pnpm demo:build
+pnpm demo:preview
+```
+
+Open the preview's `/Litigation-Hold-Manager/` path. For live editing, use `pnpm demo:dev`. The base path is set in `demo/vite.config.ts`; update it and this README if the repository is renamed. No server-side routes or authentication are bundled in this static entry point.
